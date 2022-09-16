@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.iiht.training.auction.entity.BidsEntity;
 
 public class BidsDto {
 
@@ -75,7 +76,17 @@ public class BidsDto {
 		return Objects.equals(bidAmount, other.bidAmount) && Objects.equals(biddingDate, other.biddingDate)
 				&& Objects.equals(customerId, other.customerId) && Objects.equals(id, other.id)
 				&& Objects.equals(productId, other.productId);
-	}
-	
+    }
+    
+    public BidsEntity toBidsEntity(){
+        BidsEntity entity = new BidsEntity();
+
+        entity.setBidAmount(this.bidAmount);
+        entity.setBiddingDate(this.biddingDate);
+        entity.setProductId(this.productId);
+        entity.setCustomerId(this.customerId);
+        
+        return entity;
+    }
 	
 }

@@ -2,18 +2,34 @@ package com.iiht.training.auction.dto;
 
 import java.util.Objects;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import com.iiht.training.auction.entity.CustomerEntity;
+
 public class CustomerDto {
 
 	private Long id;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String username;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String password;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
+    @Email
 	private String email;
-	
-	private Long phoneNumber;
-	
+    
+    @NotNull
+    private Long phoneNumber;
+    
+	@NotNull
+    @Size(min=3, max=100)
 	private String address;
 
 	public Long getId() {
@@ -83,5 +99,16 @@ public class CustomerDto {
 				&& Objects.equals(phoneNumber, other.phoneNumber) && Objects.equals(username, other.username);
 	}
 
+    public CustomerEntity toCustomerEntity(){
+        CustomerEntity entity = new CustomerEntity();
+
+        entity.setUsername(this.username);
+        entity.setPassword(this.password);
+        entity.setEmail(this.email);
+        entity.setPhoneNumber(this.phoneNumber);
+        entity.setAddress(this.address);
+        
+        return entity;
+    }
 	
 }

@@ -2,10 +2,20 @@ package com.iiht.training.auction.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.iiht.training.auction.dto.BidsDto;
+
+@Entity
+@Table(name="bids")
 public class BidsEntity {
 
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Double bidAmount;
 	private LocalDate biddingDate;
@@ -50,6 +60,17 @@ public class BidsEntity {
 
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
-	}
+    }
+    
+    public BidsDto toBidsDto(){
+        BidsDto dto = new BidsDto();
+
+        dto.setBidAmount(this.bidAmount);
+        dto.setBiddingDate(this.biddingDate);
+        dto.setProductId(this.productId);
+        dto.setCustomerId(this.customerId);
+
+        return dto;
+    }
 
 }

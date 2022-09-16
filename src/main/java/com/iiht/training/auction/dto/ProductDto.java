@@ -4,28 +4,41 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.iiht.training.auction.entity.ProductEntity;
 
 public class ProductDto {
 	private Long productId;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String name;
 	
 	private Long sellerId;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String description;
-	
+    
+    @NotNull
 	private Integer quantity;
-	
+    
+    @NotNull
 	private Double price;
-	
+    
+    @NotNull
 	private Double startingBidAmount;
-	
+    
+    @NotNull
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@Future
 	private LocalDate lastDateOfBidding;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String category;
 
 	public Long getProductId() {
@@ -122,5 +135,18 @@ public class ProductDto {
 				&& Objects.equals(startingBidAmount, other.startingBidAmount);
 	}
 
-	
+	public ProductEntity toProductEntity(){
+        ProductEntity entity = new ProductEntity();
+        
+        entity.setSellerId(this.sellerId);
+        entity.setName(this.name);
+        entity.setDescription(this.description);
+        entity.setQuantity(this.quantity);
+        entity.setPrice(this.price);
+        entity.setStartingBidAmount(this.startingBidAmount);
+        entity.setLastDateOfBidding(this.lastDateOfBidding);
+        entity.setCategory(this.category);
+        
+        return entity;
+    }
 }

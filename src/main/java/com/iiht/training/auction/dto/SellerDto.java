@@ -2,15 +2,30 @@ package com.iiht.training.auction.dto;
 
 import java.util.Objects;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import com.iiht.training.auction.entity.SellerEntity;
+
 public class SellerDto {
-	private Long sellerId;
-	
+    private Long sellerId;
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String sellerName;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
+    @Email
 	private String sellerEmail;
-	
+    
+    @NotNull
+    @Size(min=3, max=100)
 	private String address;
-	
+    
+    @NotNull
 	private Long phoneNumber;
 
 	public Long getSellerId() {
@@ -72,6 +87,15 @@ public class SellerDto {
 				&& Objects.equals(sellerName, other.sellerName);
 	}
 	
-	
+	public SellerEntity toSellerEntity(){
+        SellerEntity entity = new SellerEntity();
+
+        entity.setSellerName(this.sellerName);
+        entity.setSellerEmail(this.sellerEmail);
+        entity.setAddress(this.address);
+        entity.setPhoneNumber(this.phoneNumber);
+        
+        return entity;
+    }
 
 }

@@ -2,9 +2,19 @@ package com.iiht.training.auction.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import com.iiht.training.auction.dto.ProductDto;
+
+@Entity
+@Table(name="products")
 public class ProductEntity {
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long productId;
 	private Long sellerId;
 	private String name;
@@ -86,5 +96,20 @@ public class ProductEntity {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+    public ProductDto toProductDto(){
+        ProductDto dto = new ProductDto();
+    
+        dto.setSellerId(this.sellerId);
+        dto.setName(this.name);
+        dto.setDescription(this.description);
+        dto.setQuantity(this.quantity);
+        dto.setPrice(this.price);
+        dto.setStartingBidAmount(this.startingBidAmount);
+        dto.setLastDateOfBidding(this.lastDateOfBidding);
+        dto.setCategory(this.category);
+
+        return dto;
+    }
 
 }

@@ -1,11 +1,14 @@
 package com.iiht.training.auction.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.iiht.training.auction.dto.ProductDto;
+import com.iiht.training.auction.entity.ProductEntity;
+import com.iiht.training.auction.exceptions.ProductNotFoundException;
 import com.iiht.training.auction.repository.ProductRepository;
 import com.iiht.training.auction.service.ProductService;
 
@@ -17,27 +20,48 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductDto saveProduct(ProductDto productDto) {
-		return null;
+		return productRepository.save(productDto.toProductEntity()).toProductDto();
 	}
 
 	@Override
 	public ProductDto updateProduct(ProductDto productDto) {
-		return null;
+        if(productRepository.existsById(productDto.getProductId())){
+            return productRepository.save(productDto.toProductEntity()).toProductDto();
+        }else{
+            throw new ProductNotFoundException("Product not found");
+        }
 	}
 
 	@Override
 	public Boolean deleteProduct(Long productId) {
-		return false;
+        if(productRepository.existsById(productId)){
+            productRepository.deleteById(productId);
+            return true;
+        }else{
+            throw new ProductNotFoundException("Product not found");
+        }
 	}
 
 	@Override
 	public ProductDto getProductById(Long productId) {
-		return null;
+        if(productRepository.existsById(productId)){
+            ProductEntity entity = productRepository.findById(productId).get();
+            return entity.toProductDto();
+        }else{
+            throw new ProductNotFoundException("Product not found");
+        }
 	}
 
 	@Override
 	public List<ProductDto> getAllProducts() {
-		return null;
+        List<ProductEntity> allProducts = productRepository.findAll();
+        List<ProductDto> allProductsDto = new ArrayList<ProductDto>();
+
+        for(ProductEntity product : allProducts){
+            allProductsDto.add(product.toProductDto());
+        }
+
+		return allProductsDto;
 	}
 
 	@Override

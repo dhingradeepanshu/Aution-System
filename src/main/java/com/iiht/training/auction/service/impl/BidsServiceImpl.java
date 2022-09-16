@@ -21,7 +21,7 @@ public class BidsServiceImpl implements BidsService {
 
 	@Override
 	public BidsDto placeBid(BidsDto bidsDto) {
-		return null;
+		return bidsRepository.save(bidsDto.toBidsEntity()).toBidsDto();
 	}
 
 	@Override

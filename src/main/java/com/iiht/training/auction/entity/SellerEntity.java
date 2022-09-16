@@ -1,7 +1,18 @@
 package com.iiht.training.auction.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import com.iiht.training.auction.dto.SellerDto;
+
+@Entity
+@Table(name="sellers")
 public class SellerEntity {
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long sellerId;
 	private String sellerName;
 	private String sellerEmail;
@@ -48,4 +59,14 @@ public class SellerEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
+    public SellerDto toSellerDto(){
+        SellerDto dto = new SellerDto();
+
+        dto.setSellerName(this.sellerName);
+        dto.setSellerEmail(this.sellerEmail);
+        dto.setAddress(this.address);
+        dto.setPhoneNumber(this.phoneNumber);
+
+        return dto;
+    }
 }
